@@ -36,7 +36,7 @@
     if($email == $email_pengguna AND $password == $password_pengguna){
       $_SESSION['pengguna'] = $pengguna;
       if($pengguna['role_pengguna'] == 'admin' || $pengguna['role_pengguna'] == 'petugas'){
-        header('location:admin.php?kode='.$kodes);   
+        header('location:admin.php');   
       }else{
         header('location:admin.php?halaman=anggota_terdaftar');
       }

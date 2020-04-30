@@ -1,6 +1,11 @@
 <?php 
 	$kode = $_GET['kode'];
-	$query = $koneksi->query("SELECT * FROM dipinjam JOIN pengguna ON dipinjam.nim_peminjam=pengguna.nim WHERE dipinjam.kode_peminjaman='$kode'");
+	$denda = $_GET['denda'];
+	$hari = $_GET['hari'];
+	$query = $koneksi->query("SELECT * FROM dipinjam
+							 JOIN pengguna ON dipinjam.nim_peminjam=pengguna.nim
+							 JOIN buku ON dipinjam.kode_buku=buku.kode_buku
+							 WHERE dipinjam.kode_peminjaman='$kode'");
 	$data = $query->fetch_assoc();
 	if(!$data){
 		?>
@@ -12,6 +17,11 @@
  ?>
 <div class="container">
 	<div class="row">
+		<div class="col-md">
+			<a href="admin.php" class="btn btn-dark btn-sm">Kembali</a>	
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md text-center"><h4>Detail Peminjaman</h4></div>
 	</div>
 	<div class="row">
@@ -21,6 +31,11 @@
 					<td>Kode Peminjaman</td>
 					<td>:</td>
 					<td><?php echo $data['kode_peminjaman'] ?></td>
+				</tr>
+				<tr>
+					<td>Petugas</td>
+					<td>:</td>
+					<td><?php echo $data['petugas'] ?></td>
 				</tr>
 				<tr>
 					<td>Tanggal Pinjam</td>
@@ -38,6 +53,11 @@
 		</div>
 		<div class="col-md-4">
 			<table class="table table-sm">
+				<tr>
+					<td>NIM</td>
+					<td>:</td>
+					<td><?php echo $data['nim'] ?></td>
+				</tr>
 				<tr>
 					<td>Nama</td>
 					<td>:</td>
@@ -65,31 +85,16 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>No</th>
-								<th>Kode</th>
+								<th>Kode Buku</th>
 								<th>Judul</th>
-								<th>Jumlah</th>
-								
+								<th>Terlambat + Denda</th>	
 							</tr>
 						</thead>
 						<tbody>
-						<?php 
-							$no =1;
-							$sql = $koneksi->query("SELECT * FROM peminjaman JOIN buku ON peminjaman.kode_buku=buku.kode_buku JOIN dipinjam ON peminjaman.kode_pinjam=dipinjam.kode_peminjaman WHERE peminjaman.kode_pinjam='$kode'");
-							while($sqld = $sql->fetch_assoc()){
-						 ?>
 							<tr>
-								<td><?php echo $no++ ?></td>
-								<td><?php echo $sqld['kode_buku'] ?></td>
-								<td><?php echo $sqld['judul_buku'] ?></td>
-								<td><?php echo $sqld['jumlah'] ?></td>
-								
-							</tr>
-							<?php $tot = $sqld['total'] ?>
-						<?php } ?>
-							<tr>
-								<th colspan="3" style="text-align:center;">Total Peminjaman</th>
-								<td><?php echo $tot ?></td>
+								<td><?php echo $data['kode_buku'] ?></td>
+								<td><?php echo $data['judul_buku'] ?></td>
+								<td><font style='color:red;'><?php echo $hari ?> hari <br>Rp. <?php echo number_format($denda, '0','.','.') ?></font></td>
 							</tr>
 						</tbody>
 					</table>

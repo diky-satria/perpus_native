@@ -8,6 +8,10 @@
 	$sql_buku = $koneksi->query("SELECT * FROM buku");
 	$data_buku = $sql_buku->num_rows;
 
+	//ambil data riwayat peminjaman
+	$sql_riwayat = $koneksi->query("SELECT * FROM dipinjam WHERE status='dikembalikan'");
+	$data_riwayat = $sql_riwayat->num_rows;
+
  ?>
 <div class="row">
 	<div class="col-md-3">
@@ -32,8 +36,16 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-md-3">
-		
+	<div class="col-md-3 ml-3">
+		<!-- riwayat pengembalian -->
+		<div class="card text-white dashboard-card" style="width: 18rem;">
+			<a href="admin.php?halaman=admin_riwayat_pengembalian">
+			  <div class="card-body bg-success">
+			    <h5 class="card-title">Riwayat Pengembalian</h5>
+			    <div class="display-4"><?php echo $data_riwayat ?></div>
+			  </div>
+			</a>
+		</div>
 	</div>
 	<div class="col-md-3">
 		

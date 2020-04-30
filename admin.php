@@ -4,7 +4,6 @@
     header('location:index.php');
   }
   include 'koneksi.php';
-  include 'kode_pinjam.php';
  ?>
 <!doctype html>
 <html lang="en">
@@ -41,10 +40,7 @@
             <?php endif; ?>
               <?php if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'): ?>
               <li class="nav-item">
-                <a class="nav-link" href="admin.php?kode=<?php echo $kodes ?>">Transaksi</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="admin.php?halaman=data_peminjaman">Peminjaman</a>
+                <a class="nav-link" href="admin.php">Peminjaman</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin.php?halaman=admin_anggota">Anggota</a>
@@ -75,7 +71,7 @@
 
     <!-- konten -->
     <div class="container mt-4">
-      <div class="row" style="margin-top:80px;">
+      <div class="row" style="margin-top:70px;">
         <div class="col-md">
           <?php 
 
@@ -143,30 +139,16 @@
                   include 'anggota_terdaftar.php';
                 }
               }
-              if($_GET['halaman'] == 'peminjaman'){
-                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
-                  include 'peminjaman.php'; 
+              if($_GET['halaman'] == 'admin_riwayat_pengembalian'){
+                if($_SESSION['pengguna']['role_pengguna'] == 'admin'){
+                  include 'admin_riwayat_pengembalian.php'; 
                 }else{
                   include 'anggota_terdaftar.php';
                 }
               }
-              if($_GET['halaman'] == 'tambah_peminjaman'){
-                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
-                  include 'tambah_peminjaman.php'; 
-                }else{
-                  include 'anggota_terdaftar.php';
-                }
-              }
-              if($_GET['halaman'] == 'kurang_peminjaman'){
-                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
-                  include 'kurang_peminjaman.php'; 
-                }else{
-                  include 'anggota_terdaftar.php';
-                }
-              }
-              if($_GET['halaman'] == 'hapus_peminjaman'){
-                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
-                  include 'hapus_peminjaman.php'; 
+              if($_GET['halaman'] == 'admin_hapus_riwayat'){
+                if($_SESSION['pengguna']['role_pengguna'] == 'admin'){
+                  include 'admin_hapus_riwayat.php'; 
                 }else{
                   include 'anggota_terdaftar.php';
                 }
@@ -206,13 +188,6 @@
                   include 'anggota_terdaftar.php';
                 }
               }
-              if($_GET['halaman'] == 'data_peminjaman'){
-                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
-                  include 'data_peminjaman.php'; 
-                }else{
-                  include 'anggota_terdaftar.php';
-                }
-              }
               if($_GET['halaman'] == 'kembalikan_buku'){
                 if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
                   include 'kembalikan_buku.php'; 
@@ -220,8 +195,32 @@
                   include 'anggota_terdaftar.php';
                 }
               }
+              if($_GET['halaman'] == 'tambah_peminjam'){
+                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
+                  include 'tambah_peminjam.php'; 
+                }else{
+                  include 'anggota_terdaftar.php';
+                }
+              }
+              if($_GET['halaman'] == 'perpanjang_buku'){
+                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
+                  include 'perpanjang_buku.php'; 
+                }else{
+                  include 'anggota_terdaftar.php';
+                }
+              }
+              if($_GET['halaman'] == 'detail_peminjaman'){
+                if($_SESSION['pengguna']['role_pengguna'] == 'admin' || $_SESSION['pengguna']['role_pengguna'] == 'petugas'){
+                  include 'detail_peminjaman.php'; 
+                }else{
+                  include 'anggota_terdaftar.php';
+                }
+              }
               if($_GET['halaman'] == 'anggota_terdaftar'){
                 include 'anggota_terdaftar.php'; 
+              }
+              if($_GET['halaman'] == 'detail_peminjaman_anggota'){
+                include 'detail_peminjaman_anggota.php'; 
               }
             }else{
               include 'admin_home.php';
@@ -266,5 +265,6 @@
           $('#example').DataTable();
       } );
     </script>
+    
   </body>
 </html>

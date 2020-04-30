@@ -2,8 +2,8 @@
 
 	function kode_random($length){
 
-		$data = "1234567890";
-		$string = "UNUSIA-";
+		$data = "12345";
+		$string = "UNU-";
 
 		for ($i=0; $i < $length ; $i++) { 
 			$pos = rand(0, strlen($data) -1);
@@ -13,6 +13,6 @@
 		return $string;
 	}
 		
-	$kodes = kode_random(10);
+	$kodes = kode_random(5);
 
  ?>
