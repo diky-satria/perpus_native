@@ -89,7 +89,8 @@
 		$nim = $_POST['nim'];
 		$status = 'dipinjam';
 		$sql = $koneksi->query("INSERT INTO dipinjam (kode_peminjaman,petugas,tgl_pinjam,tgl_kembali,kode_buku,nim_peminjam,status) VALUES ('$kodep','$petugas','$tgl_pinjam','$tgl_kembali','$buku','$nim','$status')");
-		if($sql){
+		$sql2 = $koneksi->query("UPDATE buku SET jumlah_buku=(jumlah_buku-1) WHERE kode_buku='$buku'");
+		if($sql || $sql2){
 			?>
 			<script type="text/javascript">
 			alert('Buku berhasil dipinjam');

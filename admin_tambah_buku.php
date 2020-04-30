@@ -8,7 +8,7 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-6">
-					<form method="post">
+					<form method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<label>Kode</label>
 							<input type="text" name="kode" class="form-control" required>
@@ -49,6 +49,10 @@
 								<option value="rak 4">Rak 4</option>
 							</select>
 						</div>
+						<div class="form-group">
+							<label>Foto</label>
+							<input type="file" name="foto" class="form-control" required>
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -72,7 +76,13 @@
 		$isbn = $_POST['isbn'];
 		$jumlah = $_POST['jumlah'];
 		$lokasi = $_POST['lokasi'];
-		$query = $koneksi->query("INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit,tahun_terbit,isbn,jumlah_buku,lokasi) VALUES ('$kode','$judul','$pengarang','$penerbit','$tahun','$isbn','$jumlah','$lokasi')");
+
+		$foto = $_FILES['foto']['name'];
+		$tempat = $_FILES['foto']['tmp_name'];
+
+		move_uploaded_file($tempat, 'bootstrap4/foto_buku/'.$foto);
+
+		$query = $koneksi->query("INSERT INTO buku (kode_buku,judul_buku,pengarang,penerbit,tahun_terbit,isbn,jumlah_buku,lokasi,foto) VALUES ('$kode','$judul','$pengarang','$penerbit','$tahun','$isbn','$jumlah','$lokasi','$foto')");
 		if($query){
 			?>
 			<script type="text/javascript">

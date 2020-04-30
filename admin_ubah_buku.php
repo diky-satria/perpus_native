@@ -14,7 +14,7 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-6">
-					<form method="post">
+					<form method="post" enctype="multipart/form-data">
 						<div class="form-group">
 							<label>Kode</label>
 							<input type="text" name="kode" value="<?php echo $buku['kode_buku'] ?>" class="form-control" readonly>
@@ -31,12 +31,12 @@
 							<label>Penerbit</label>
 							<input type="text" name="penerbit" value="<?php echo $buku['penerbit'] ?>" class="form-control" required>
 						</div>
-					</div>
-					<div class="col-md-6">
 						<div class="form-group">
 							<label>Tahun Terbit</label>
 							<input type="number" name="tahun" value="<?php echo $buku['tahun_terbit'] ?>" class="form-control" required>
 						</div>
+					</div>
+					<div class="col-md-6">
 						<div class="form-group">
 							<label>ISBN</label>
 							<input type="text" name="isbn" value="<?php echo $buku['isbn'] ?>" class="form-control" required>
@@ -53,6 +53,11 @@
 								<option value="rak 3" <?php if($lokasi == 'rak 3'){ echo 'selected'; } ?>>Rak 3</option>
 								<option value="rak 4" <?php if($lokasi == 'rak 4'){ echo 'selected'; } ?>>Rak 4</option>
 							</select>
+						</div>
+						<img src="bootstrap4/foto_buku/<?php echo $buku['foto'] ?>" width="108">
+						<div class="form-group">
+							<label>Ubah Foto</label>
+							<input type="file" name="foto" class="form-control">
 						</div>
 					</div>
 				</div>
@@ -76,22 +81,33 @@
 		$isbn = $_POST['isbn'];
 		$jumlah = $_POST['jumlah'];
 		$lokasi = $_POST['lokasi'];
-		$query = $koneksi->query("UPDATE buku SET judul_buku='$judul',pengarang='$pengarang',penerbit='$penerbit',tahun_terbit='$tahun',isbn='$isbn',jumlah_buku='$jumlah',lokasi='$lokasi' WHERE id_buku='$id'");
-		if($query){
+
+		$foto_lama = $buku['foto'];
+
+		$foto = $_FILES['foto']['name'];
+		$tempat = $_FILES['foto']['tmp_name'];
+
+		move_uploaded_file($tempat, 'bootstrap4/foto_buku/'.$foto);
+
+		if($foto){
+			$query = $koneksi->query("UPDATE buku SET judul_buku='$judul',pengarang='$pengarang',penerbit='$penerbit',tahun_terbit='$tahun',isbn='$isbn',jumlah_buku='$jumlah',lokasi='$lokasi',foto='$foto' WHERE id_buku='$id'");
+			unlink('bootstrap4/foto_buku/'.$foto_lama);
+			?>
+			<script type="text/javascript">
+			alert('Buku berhasil diubah');
+			window.location.href="admin.php?halaman=admin_buku";
+			</script>
+			<?php	
+		}else{
+			$query = $koneksi->query("UPDATE buku SET judul_buku='$judul',pengarang='$pengarang',penerbit='$penerbit',tahun_terbit='$tahun',isbn='$isbn',jumlah_buku='$jumlah',lokasi='$lokasi' WHERE id_buku='$id'");
 			?>
 			<script type="text/javascript">
 			alert('Buku berhasil diubah');
 			window.location.href="admin.php?halaman=admin_buku";
 			</script>
 			<?php
-		}else{
-			?>
-			<script type="text/javascript">
-			alert('Buku gagal diubah');
-			window.location.href="admin.php?halaman=admin_ubah_buku";
-			</script>
-			<?php
 		}
+
 	}
 	
  ?>

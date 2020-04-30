@@ -16,6 +16,7 @@
                     <th>ISBN</th>
                     <th>Jumlah</th>
                     <th>Lokasi</th>
+                    <th>Foto</th>
                     <th>Opsi</th>
                 </tr>
             </thead>
@@ -35,6 +36,9 @@
                     <td><?php echo $data['isbn'] ?></td>
                     <td><?php echo $data['jumlah_buku'] ?></td>
                     <td><?php echo $data['lokasi'] ?></td>
+                    <td>
+                        <img src="bootstrap4/foto_buku/<?php echo $data['foto'] ?>" width="50">
+                    </td>
                     <td>
                         <a href="admin.php?halaman=admin_ubah_buku&id=<?php echo $data['id_buku'] ?>" class="btn btn-sm btn-success">Ubah</a>
                         <a onclick="return confirm('lanjutkan')" href="admin.php?halaman=admin_hapus_buku&id=<?php echo $data['id_buku'] ?>" class="btn btn-sm btn-danger">Hapus</a>
