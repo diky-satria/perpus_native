@@ -68,10 +68,14 @@
                                     WHERE judul_buku LIKE '%$keyword%'
                                     OR pengarang LIKE '%$keyword%'
                                     OR penerbit LIKE '%$keyword%'");
+
           }else{
             $buku = $koneksi->query("SELECT * FROM buku");
           } 
+
+          if($data = $buku->num_rows){
             while($data = $buku->fetch_assoc()){
+          
        ?>
         <div class="card mb-3 mx-2" style="max-width: 400px;">
           <div class="row no-gutters">
@@ -88,7 +92,19 @@
             </div>
           </div>
         </div>
-      <?php } ?>
+      <?php } 
+          }else{
+            echo "<div class='card mb-3 mx-2' style='width: 100%;'>
+                    <div class='row no-gutters'>
+                      <div class='col-md'>
+                        <div class='card-body'>
+                          <h5 class='card-title' style='color:red;'><center>Pencarian tidak ditemukan</center></h5>   
+                        </div>
+                      </div>
+                    </div>
+                  </div>";
+        }?>
+
       </div>
     </div>
 
